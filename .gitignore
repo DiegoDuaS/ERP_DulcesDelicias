@@ -1,0 +1,7 @@
+# Docker persistent files (no subir a git)
+*.dump
+*.zip
+.env
+
+# Backups grandes (opcional si superan 50MB)
+# backups/*.zip
