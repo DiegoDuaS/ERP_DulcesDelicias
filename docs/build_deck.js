@@ -60,6 +60,71 @@ const SECTIONS = [
       { t: "Impacto en inventarios", b: ["Materias primas consumidas", "Productos terminados disponibles"], img: "17-stock-final" },
     ],
   },
+  {
+    title: "Gestión de clientes (CRM)",
+    subtitle: "Punto 4",
+    slides: [
+      { t: "Etapas del ciclo de ventas", b: ["Prospecto, Calificado, Negociación y Cierre (Ganado)", "Cierre marcado como etapa ganada"], img: "18-crm-etapas" },
+      { t: "Ficha de cliente", b: ["Tipo de cliente y preferencias como etiquetas", "Persona de contacto, teléfono y correo", "Historial de compras en el botón Sales"], img: "19-cliente-ficha" },
+      { t: "Oportunidades por etapa", b: ["La Dulzura: Prospecto", "Supermercado Delicias: Negociación", "Dulce Sabor: Cierre (Ganado)"], img: "20-crm-pipeline" },
+      { t: "Seguimientos programados", b: ["Llamada, correo y tarea por oportunidad", "Fechas de vencimiento por actividad"], img: "21-crm-actividades" },
+      { t: "Reunión con recordatorio", b: ["Negociación con Supermercado Delicias", "Alerta 1 hora antes en el calendario"], img: "22-calendario-recordatorio" },
+    ],
+  },
+  {
+    title: "Gestión de ventas",
+    subtitle: "Punto 5",
+    slides: [
+      { t: "Términos de pago", b: ["Pago inmediato y a 30 días", "Nuevo: 50% anticipo / 50% a 30 días"], img: "23-terminos-pago" },
+      { t: "Condiciones de entrega", b: ["Reparto propio sin costo", "Flete a distribuidor con precio fijo"], img: "24-metodos-entrega" },
+      { t: "Pedido: Confitería La Dulzura", b: ["20 caramelos, 10 chocolates, 10 galletas", "Pago inmediato, entrega completa"], img: "25-pedido-ladulzura" },
+      { t: "Pedido: Supermercado Delicias", b: ["40 caramelos, 20 chocolates, 20 galletas", "Pago a 30 días, entrega parcial permitida"], img: "26-pedido-delicias" },
+      { t: "Pedido: Distribuidora Dulce Sabor", b: ["30 caramelos, 15 chocolates, 15 galletas", "50% / 50%, flete e Incoterm EXW"], img: "27-pedido-dulcesabor" },
+      { t: "Seguimiento de pedidos", b: ["Estado de facturación y de entrega por pedido"], img: "28-pedidos-lista" },
+      { t: "Análisis de ventas", b: ["Ventas por cliente y producto"], img: "29-reporte-ventas" },
+    ],
+  },
+  {
+    title: "Facturación",
+    subtitle: "Punto 6",
+    slides: [
+      { t: "Métodos de pago", b: ["Un diario por método", "Transferencia, tarjeta y contra entrega"], img: "30-diarios-pago" },
+      { t: "Factura generada desde el pedido", b: ["Contabilizada y enviada al cliente", "Término de pago heredado del pedido"], img: "31-factura-confirmada" },
+      { t: "Pago en dos partes", b: ["Dulce Sabor: 50% al facturar", "50% restante contra entrega"], img: "32-factura-pago-parcial" },
+      { t: "Pagos registrados", b: ["Cada pago en el diario de su método"], img: "33-pagos-clientes" },
+      { t: "Facturas pagadas", b: ["Las tres facturas en estado Paid"], img: "34-facturas-pagadas" },
+    ],
+  },
+  {
+    title: "Gestión de entregas",
+    subtitle: "Punto 7",
+    slides: [
+      { t: "Órdenes de entrega", b: ["Generadas al confirmar cada pedido", "Fecha programada por cliente"], img: "35-entregas-lista" },
+      { t: "Entrega completada", b: ["Validada al llegar al cliente", "El pedido queda totalmente entregado"], img: "36-entrega-validada" },
+      { t: "Movimientos de inventario", b: ["De WH/Stock a Partners/Customers"], img: "38-moves-history" },
+      { t: "Stock después de las ventas", b: ["Productos terminados descontados", "Las materias primas no cambian"], img: "39-stock-tras-ventas" },
+    ],
+  },
+  {
+    title: "Atención postventa",
+    subtitle: "Punto 8",
+    slides: [
+      { t: "Proyecto de atención al cliente", b: ["Helpdesk es de Odoo Enterprise", "En Community: proyecto con etapas de atención"], img: "40-proyecto-postventa" },
+      { t: "Caso: chocolates en mal estado", b: ["La Dulzura recibió 5 chocolates derretidos", "Seguimiento completo en el historial"], img: "41-ticket-caso" },
+      { t: "Devolución del producto", b: ["5 chocolates devueltos al inventario"], img: "43-devolucion" },
+      { t: "Nota de crédito", b: ["Reembolso de los 5 chocolates", "Pagado a la tarjeta del cliente", "Caso cerrado"], img: "44-nota-credito" },
+    ],
+  },
+  {
+    title: "Reportes",
+    subtitle: "Punto 9",
+    slides: [
+      { t: "Estado del inventario", b: ["Existencias y valor por producto"], img: "39-stock-tras-ventas" },
+      { t: "Listado de clientes", b: ["Los tres clientes con sus datos de contacto"], img: "47-listado-clientes" },
+      { t: "Listado de proveedores", b: ["Distribuidora SixSeven S.A."], img: "48-listado-proveedores" },
+      { t: "Estado de resultados", b: ["Periodo: octubre 2026", "Ingresos: Q 892.86", "Costo de ventas: Q 160.71"], img: "49-estado-resultados" },
+    ],
+  },
 ];
 
 function findImage(base) {
@@ -68,6 +133,12 @@ function findImage(base) {
     if (fs.existsSync(p)) return p;
   }
   return null;
+}
+
+// Ancho / alto de un PNG, leido de su cabecera IHDR
+function pngRatio(file) {
+  const buf = fs.readFileSync(file).subarray(16, 24);
+  return buf.readUInt32BE(0) / buf.readUInt32BE(4);
 }
 
 const pres = new pptxgen();
@@ -83,11 +154,11 @@ pres.fontFace = BODY;
     x: 0.7, y: 1.6, w: 8.6, h: 1.0, fontFace: HEAD, fontSize: 44, bold: true,
     color: "FFFFFF", isTextBox: true, margin: 0,
   });
-  s.addText("Implementación de Odoo: productos, inventarios y producción", {
+  s.addText("Implementación de Odoo: de la materia prima a la postventa", {
     x: 0.7, y: 2.7, w: 8.6, h: 0.7, fontFace: BODY, fontSize: 22,
     color: CARAMEL, isTextBox: true, margin: 0,
   });
-  s.addText("Puntos 1, 2 y 3 del caso de estudio", {
+  s.addText("Puntos 1 al 9 del caso de estudio", {
     x: 0.7, y: 4.4, w: 8.6, h: 0.4, fontFace: BODY, fontSize: 14,
     color: "D7CCC8", isTextBox: true, margin: 0,
   });
@@ -97,21 +168,24 @@ pres.fontFace = BODY;
 {
   const s = pres.addSlide();
   s.background = { color: "FFFFFF" };
-  s.addText("Alcance de esta parte", {
+  s.addText("Alcance", {
     x: 0.5, y: 0.35, w: 9, h: 0.7, fontFace: HEAD, fontSize: 36, bold: true,
     color: COCOA, isTextBox: true, margin: 0,
   });
+  // Dos columnas para que entren los 9 puntos
+  const filas = Math.ceil(SECTIONS.length / 2);
   SECTIONS.forEach((sec, i) => {
-    const y = 1.5 + i * 1.2;
+    const x = i < filas ? 0.5 : 5.1;
+    const y = 1.3 + (i % filas) * 0.8;
     s.addShape(pres.ShapeType.ellipse, {
-      x: 0.5, y, w: 0.8, h: 0.8, fill: { color: CANDY }, line: { color: CANDY },
+      x, y, w: 0.6, h: 0.6, fill: { color: CANDY }, line: { color: CANDY },
     });
     s.addText(String(i + 1), {
-      x: 0.5, y, w: 0.8, h: 0.8, align: "center", valign: "middle",
-      fontFace: HEAD, fontSize: 28, bold: true, color: "FFFFFF", isTextBox: true, margin: 0,
+      x, y, w: 0.6, h: 0.6, align: "center", valign: "middle",
+      fontFace: HEAD, fontSize: 22, bold: true, color: "FFFFFF", isTextBox: true, margin: 0,
     });
     s.addText(sec.title, {
-      x: 1.6, y, w: 7.9, h: 0.8, valign: "middle", fontFace: BODY, fontSize: 22,
+      x: x + 0.8, y, w: 3.7, h: 0.6, valign: "middle", fontFace: BODY, fontSize: 17,
       color: INK, isTextBox: true, margin: 0,
     });
   });
@@ -137,15 +211,20 @@ SECTIONS.forEach((sec) => {
       x: 0.5, y: 0.3, w: 9, h: 0.8, fontFace: HEAD, fontSize: 30, bold: true,
       color: COCOA, isTextBox: true, margin: 0, valign: "middle",
     });
+    const img = findImage(sl.img);
+    // Capturas muy anchas (listas, embudos): puntos arriba e imagen a todo el ancho
+    const ancha = img && img.endsWith(".png") && pngRatio(img) > 2.2;
+    const textBox = ancha
+      ? { x: 0.5, y: 1.15, w: 9, h: 1.0, fontSize: 14 }
+      : { x: 0.5, y: 1.4, w: 3.1, h: 3.6, fontSize: 16 };
     s.addText(
       sl.b.map((txt, i) => ({
         text: txt,
-        options: { bullet: true, breakLine: i < sl.b.length - 1, paraSpaceAfter: 10 },
+        options: { bullet: true, breakLine: i < sl.b.length - 1, paraSpaceAfter: ancha ? 4 : 10 },
       })),
-      { x: 0.5, y: 1.4, w: 3.1, h: 3.6, fontFace: BODY, fontSize: 16, color: INK, valign: "top", isTextBox: true, margin: 0 }
+      { ...textBox, fontFace: BODY, color: INK, valign: "top", isTextBox: true, margin: 0 }
     );
-    const img = findImage(sl.img);
-    const box = { x: 3.9, y: 1.3, w: 5.6, h: 3.8 };
+    const box = ancha ? { x: 0.5, y: 2.3, w: 9, h: 3.0 } : { x: 3.9, y: 1.3, w: 5.6, h: 3.8 };
     if (img) {
       s.addImage({
         path: img, ...box, sizing: { type: "contain", w: box.w, h: box.h },
@@ -175,9 +254,11 @@ SECTIONS.forEach((sec) => {
     [
       { text: "Materias primas y productos terminados configurados", options: { bullet: true, breakLine: true, paraSpaceAfter: 10 } },
       { text: "Inventario con reabastecimiento automatizado desde compras", options: { bullet: true, breakLine: true, paraSpaceAfter: 10 } },
-      { text: "Producción planificada con listas de materiales y órdenes de trabajo", options: { bullet: true } },
+      { text: "Producción planificada con listas de materiales y órdenes de trabajo", options: { bullet: true, breakLine: true, paraSpaceAfter: 10 } },
+      { text: "Clientes, oportunidades, ventas, facturas y cobros conectados", options: { bullet: true, breakLine: true, paraSpaceAfter: 10 } },
+      { text: "Entregas, postventa y estado de resultados sobre los mismos datos", options: { bullet: true } },
     ],
-    { x: 0.7, y: 2.3, w: 8.6, h: 2.4, fontFace: BODY, fontSize: 20, color: "FFFFFF", valign: "top", isTextBox: true, margin: 0 }
+    { x: 0.7, y: 2.2, w: 8.6, h: 3.0, fontFace: BODY, fontSize: 20, color: "FFFFFF", valign: "top", isTextBox: true, margin: 0 }
   );
 }
 

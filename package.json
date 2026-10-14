@@ -1,0 +1,28 @@
+{
+  "name": "erp_dulcesdelicias",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "capturas": "node scripts/capturas.js",
+    "deck": "node docs/build_deck.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoDuaS/ERP_DulcesDelicias.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DiegoDuaS/ERP_DulcesDelicias/issues"
+  },
+  "homepage": "https://github.com/DiegoDuaS/ERP_DulcesDelicias#readme",
+  "devDependencies": {
+    "playwright-core": "^1.64.1",
+    "pptxgenjs": "^4.0.1"
+  }
+}
